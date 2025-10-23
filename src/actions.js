@@ -27,4 +27,10 @@ const addTodo = async (formData) => {
   redirect("/");
 };
 
-export { deleteTodo, addTodo };
+const updateFindById = async (id) => {
+  "use server";
+  const todo = await db.todo.findFirst({ where: { id: Number(id) } });
+  return todo;
+};
+
+export { deleteTodo, addTodo, updateFindById };
