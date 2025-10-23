@@ -1,33 +1,32 @@
-import { db } from "@/db.js";
-import { redirect } from "next/dist/server/api-utils";
+import { addTodo } from "@/actions";
 
 // 1 - criacao form
-export default function TodoPage({ ...props }) {
+export default function TodoPage() {
   // 2 inserindo dados no banco
   // formData = usState
 
-  const addTodo = async (formData) => {
-    "use server";
+  // const addTodo = async (formData) => {
+  //   "use server";
 
-    const titulo = formData.get("titulo");
-    const descricao = formData.get("descricao");
-    const status = "pendente";
+  //   const titulo = formData.get("titulo");
+  //   const descricao = formData.get("descricao");
+  //   const status = "pendente";
 
-    const todo = await db.todo.create({
-      data: {
-        titulo,
-        descricao,
-        status,
-      },
-    });
+  //   const todo = await db.todo.create({
+  //     data: {
+  //       titulo,
+  //       descricao,
+  //       status,
+  //     },
+  //   });
 
-    console.log(todo);
-    redirect("/");
-  };
+  //   console.log(todo);
+  //   redirect("/");
+  // };
 
   return (
     <div className="max-w-md mx-auto mt-10">
-      <h1 {...props}>Criar novas tarefa</h1>
+      <h1>Criar novas tarefa</h1>
       <form
         action={addTodo}
         className="flex flex-col gap-4 p-4 bg-white shadow-lg rounded-lg"
