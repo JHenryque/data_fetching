@@ -27,6 +27,8 @@ const addTodo = async (formData) => {
 };
 
 const updateFindById = async (id) => {
+  if (!id) throw new Error("Function not implemented.");
+
   const todo = await db.todo.findFirst({ where: { id: Number(id) } });
   return todo;
 };
