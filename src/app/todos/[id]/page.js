@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { notFound } from "next/navigation";
 
 const findFirst = async ({ params }) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const { id } = await params;
   const todo = await db.todo.findFirst({
     where: {
