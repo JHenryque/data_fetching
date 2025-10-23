@@ -39,24 +39,30 @@ const updateTodo = async (formState, formData) => {
   const descricao = formData.get("descricao");
   //const status = formData.get("status");
 
-  if (titulo.length < 5) {
+  try {
+    if (titulo.length < 5) {
+      return {
+        errors: "Título precisa ter pelo menos 5 caracteres.",
+      };
+    }
+
+    if (descricao.length < 10) {
+      return {
+        errors: "Descrição precisa ter pelo menos 10 caracteres.",
+      };
+    }
+
+    await db.todo.update({
+      where: { id },
+      data: { titulo, descricao },
+    });
+
+    redirect("/");
+  } catch (error) {
     return {
-      errors: "Título precisa ter pelo menos 5 caracteres.",
+      errors: error.message,
     };
   }
-
-  if (descricao.length < 10) {
-    return {
-      errors: "Descrição precisa ter pelo menos 10 caracteres.",
-    };
-  }
-
-  await db.todo.update({
-    where: { id },
-    data: { titulo, descricao },
-  });
-
-  redirect("/");
 };
 
 export { deleteTodo, addTodo, updateFindById, updateTodo };
