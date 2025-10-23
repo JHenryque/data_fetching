@@ -1,7 +1,11 @@
 import { db } from "@/db.js";
 import { redirect } from "next/dist/server/api-utils";
 
+// 1 - criacao form
 export default function TodoPage({ ...props }) {
+  // 2 inserindo dados no banco
+  // formData = usState
+
   const addTodo = async (formData) => {
     "use server";
 
