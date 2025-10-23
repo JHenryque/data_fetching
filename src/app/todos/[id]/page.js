@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { notFound } from "next/navigation";
 
 const findFirst = async ({ params }) => {
   const { id } = await params;
@@ -7,6 +8,8 @@ const findFirst = async ({ params }) => {
       id: Number(id),
     },
   });
+
+  if (!todo) return notFound();
 
   return (
     <div>
