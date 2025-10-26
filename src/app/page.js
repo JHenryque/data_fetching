@@ -1,5 +1,6 @@
-import { deleteTodo } from "@/actions";
+import { deleteTodo, toggleTodoStatus } from "@/actions";
 import Button from "@/components/Button";
+import Checkbox from "@/components/Checkbox";
 import { db } from "@/db";
 import Link from "next/link";
 
@@ -38,8 +39,9 @@ export default async function Home() {
                 {/* Formulário para alternar o status */}
                 <div className="flex items-center gap-2">
                   <p className="italic">completar?</p>
-                  <form action={"toggleTodoStatus"}>
+                  <form action={toggleTodoStatus}>
                     <input type="hidden" name="id" value={todo.id} />
+                    <Checkbox checked={todo.status === "completa"} />
                   </form>
                 </div>
               </div>

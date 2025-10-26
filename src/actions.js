@@ -25,6 +25,8 @@ const addTodo = async (formData) => {
     },
   });
 
+  revalidatePath("/");
+
   redirect("/");
 };
 
@@ -39,7 +41,6 @@ const updateTodo = async (formState, formData) => {
   const id = Number(formData.get("id"));
   const titulo = formData.get("titulo");
   const descricao = formData.get("descricao");
-  //const status = formData.get("status");
 
   try {
     if (titulo.length < 5) {
@@ -59,6 +60,7 @@ const updateTodo = async (formState, formData) => {
       data: { titulo, descricao },
     });
 
+    revalidatePath("/");
     redirect("/");
   } catch (error) {
     return {
@@ -67,4 +69,19 @@ const updateTodo = async (formState, formData) => {
   }
 };
 
-export { deleteTodo, addTodo, updateFindById, updateTodo };
+const toggleTodoStatus = async (formData) => {
+  const id = Number(formData.get("id"));
+
+  const todo = await db.todo.findFirst({ where: { id } });
+
+  if (!todo) return notFound();
+
+  const status = todo.status === "pendente" ? "completa" : "pendente";
+
+  await db.todo.update({ where: { id }, data: { status } });
+
+  revalidatePath("/");
+  redirect("/");
+};
+
+export { deleteTodo, addTodo, updateFindById, updateTodo, toggleTodoStatus };
