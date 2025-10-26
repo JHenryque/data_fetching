@@ -2,11 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { db } from "./db";
+import { revalidatePath } from "next/cache";
 
 async function deleteTodo(formData) {
   const id = Number(formData.get("id"));
   await db.todo.delete({ where: { id } });
 
+  revalidatePath("/");
   redirect("/");
 }
 
